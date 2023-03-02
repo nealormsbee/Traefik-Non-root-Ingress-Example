@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kubecost-traefik-ingress-route
+  namespace: neal
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: PathPrefix(`/kubecost`)
+      kind: Rule
+      services:
+        - name: kubecost-internal
+          port: 9090
+      middlewares:
+        - name: remove-prefix
